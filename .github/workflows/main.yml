@@ -27,3 +27,4 @@ jobs:
       uses: distributhor/workflow-webhook@v2
       env:
         webhook_url: ${{ secrets.DOCKERHUB_HOOK }}
+        webhook_secret: ${{ secrets.DOCKERHUB_HOOK_SECRET }}
