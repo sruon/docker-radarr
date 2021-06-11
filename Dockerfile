@@ -8,7 +8,7 @@ RUN git clone --depth 1 -b master https://github.com/Radarr/Radarr.git
 WORKDIR /source/Radarr
 RUN sed -i "s/connectionBuilder.JournalMode = .*/connectionBuilder.JournalMode = SQLiteJournalModeEnum.Truncate;/g" ./src/NzbDrone.Core/Datastore/ConnectionStringFactory.cs
 RUN ./build.sh --all --framework net5.0 --runtime linux-x64
-RUN cd _artifacts/linux-x64/net5.0 && tar cvzf radarr.tar.gz Radarr
+RUN cd _artifacts/linux-x64/net5.0 && tar cvzf radarr.tar.gz Radarr && mv radarr.tar.gz /source
 
 FROM ghcr.io/linuxserver/baseimage-ubuntu:focal
 
@@ -24,7 +24,7 @@ ARG DEBIAN_FRONTEND="noninteractive"
 ARG RADARR_BRANCH="master"
 ENV XDG_CONFIG_HOME="/config/xdg"
 
-COPY --from=build /source/Radarr/radarr.tar.gz /tmp/radarr.tar.gz
+COPY --from=build /source/radarr.tar.gz /tmp/radarr.tar.gz
 
 RUN \
  echo "**** install packages ****" && \
