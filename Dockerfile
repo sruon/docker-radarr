@@ -8,7 +8,7 @@ RUN git clone --depth 1 -b master https://github.com/Radarr/Radarr.git
 WORKDIR /source/Radarr
 RUN sed -i "s/connectionBuilder.JournalMode = .*/connectionBuilder.JournalMode = SQLiteJournalModeEnum.Truncate;/g" ./src/NzbDrone.Core/Datastore/ConnectionStringFactory.cs
 RUN ./build.sh --all --framework net5.0 --runtime linux-x64
-RUN tar cvzf radarr.tar.gz _artifacts/linux-x64/net5.0/Radarr
+RUN cd _artifacts/linux-x64/net5.0 && tar cvzf radarr.tar.gz Radarr
 
 FROM ghcr.io/linuxserver/baseimage-ubuntu:focal
 
